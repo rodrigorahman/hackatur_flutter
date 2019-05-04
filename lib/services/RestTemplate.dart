@@ -44,7 +44,7 @@ class RestTemplate {
         _dio.interceptors.errorLock.lock();
         dio.request(options.path, options: options);
         Navigator.of(this.context).push(MaterialPageRoute(
-          builder: (BuildContext context) => HomePage(),
+          builder: (BuildContext context) => FirstAccess(),
         ));
       }
       // Do something with response error
