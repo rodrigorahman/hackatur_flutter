@@ -63,7 +63,7 @@ class _FirstAccessState extends State<FirstAccess> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Stack(
-        fit: StackFit.expand,
+        alignment: Alignment.center,
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height,
