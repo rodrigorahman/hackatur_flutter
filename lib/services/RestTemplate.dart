@@ -39,13 +39,19 @@ class RestTemplate {
       Navigator.of(this.context).pop();
       RequestOptions options = e.response?.request;
       if (e.response?.statusCode == 403) {
-        _dio.lock();
-        _dio.interceptors.responseLock.lock();
-        _dio.interceptors.errorLock.lock();
-        dio.request(options.path, options: options);
-        Navigator.of(this.context).push(MaterialPageRoute(
-          builder: (BuildContext context) => FirstAccess(),
-        ));
+//        _dio.lock();
+//        _dio.interceptors.responseLock.lock();
+//        _dio.interceptors.errorLock.lock();
+//        dio.request(options.path, options: options);
+        try {
+          Navigator.of(this.context
+          ).push(MaterialPageRoute(
+            builder: (BuildContext context) => FirstAccess(),
+          )
+          );
+        }catch(err){
+
+        }
       }
       // Do something with response error
       return e; //continue
@@ -93,16 +99,18 @@ class RestTemplate {
       print('error: ${e}');
       print('response: ${e.response}');
       if (e.response?.statusCode == 403) {
-        _dio.lock();
-        _dio.interceptors.responseLock.lock();
-        _dio.interceptors.errorLock.lock();
-        dio.request(options.path, options: options);
-        Navigator.of(this.context).push(MaterialPageRoute(
-          builder: (BuildContext context) => FirstAccess(),
-        ));
+//        _dio.lock();
+//        _dio.interceptors.responseLock.lock();
+//        _dio.interceptors.errorLock.lock();
+//        dio.request(options.path, options: options);
+        try {
+          Navigator.of(this.context).push(MaterialPageRoute(
+            builder: (BuildContext context) => FirstAccess(),
+          ));
+        } catch (err) {}
+        // Do something with response error
+        return e; //continue
       }
-      // Do something with response error
-      return e; //continue
     }));
   }
 
