@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatPage extends StatefulWidget {
+  String nome;
+
+  ChatPage(this.nome);
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
+  TextEditingController editController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,15 +40,16 @@ class _ChatPageState extends State<ChatPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    'https://static1.purepeople.com.br/articles/3/26/44/73/@/3010610-maquiagem-de-sandy-e-sua-marca-registrad-950x0-2.jpg')),
+                              backgroundColor: Colors.brown.shade800,
+                              child: Icon(Icons.person, color: Colors.white),
+                            ),
                             SizedBox(width: 20),
                             Padding(
                               padding: const EdgeInsets.all(3.0),
-                              child: Text('Rodrigo Almeida',
+                              child: Text(this.widget.nome,
                                   style: TextStyle(
                                       fontFamily: 'OpenSans',
-                                      fontSize: 30,
+                                      fontSize: 25,
                                       color: Colors.white)),
                             ),
                           ],
@@ -56,7 +63,7 @@ class _ChatPageState extends State<ChatPage> {
                   child: StreamBuilder(
                       stream: Firestore.instance.collection("chat").snapshots(),
                       builder: (context, snapshot) {
-                        switch(snapshot.connectionState){
+                        switch (snapshot.connectionState) {
                           case ConnectionState.none:
                           case ConnectionState.waiting:
                             return Center(
@@ -67,19 +74,26 @@ class _ChatPageState extends State<ChatPage> {
                                 reverse: true,
                                 itemCount: snapshot.data.documents.length,
                                 itemBuilder: (context, index) {
-                                  List r = snapshot.data.documents.reversed.toList();
+                                  List r =
+                                      snapshot.data.documents.reversed.toList();
                                   print('Data ${r[index].data}');
-                                  return Text('teste');
-                                }
-                            );
+                                  return ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundColor: Colors.brown.shade800,
+                                      child: Icon(Icons.person, color: Colors.white),
+                                    ),
+                                    title: Text(r[index].data['nome']),
+                                    subtitle: Text(r[index].data['mensagem']),
+                                  );
+                                });
                         }
-                      }
-                  ),
+                      }),
                 ),
                 Row(
                   children: <Widget>[
                     Expanded(
                         child: TextFormField(
+                      controller: editController,
                       decoration: InputDecoration(
                           disabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(style: BorderStyle.none)),
@@ -97,7 +111,20 @@ class _ChatPageState extends State<ChatPage> {
                         child: IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () async {
-
+                            Firestore.instance.collection("chat").add({
+                              'imagem':
+                                  'https://static1.purepeople.com.br/articles/3/26/44/73/@/3010610-maquiagem-de-sandy-e-sua-marca-registrad-950x0-2.jpg',
+                              'mensagem': editController.text,
+                              'nome': this.widget.nome
+                            });
+//                                .collection('mensagens')
+//                                .add({
+//                              'imagem':
+//                              'https://static1.purepeople.com.br/articles/3/26/44/73/@/3010610-maquiagem-de-sandy-e-sua-marca-registrad-950x0-2.jpg',
+//                              'mensagem': editController.text,
+//                              'nome': 'teste' + ''
+//                            });
+                            editController.text = '';
                           },
                         ))
                   ],

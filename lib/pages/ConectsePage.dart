@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cvcandgo/pages/ChatPage.dart';
 import 'package:flutter/material.dart';
 
@@ -93,24 +94,28 @@ class _ConectsePageState extends State<ConectsePage> {
                         var p = pessoas[index];
                         return ListTile(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) => ChatPage(),
-                                  ));
+//                              Firestore.instance
+//                                  .collection("chat")
+//                                  .add({}).then((d) {
+                              Firestore.instance.collection("chat")
+//                                    .document(d.documentID)
+//                                    .collection('mensagens')
+                                  .add({
+                                'imagem':
+                                    'https://static1.purepeople.com.br/articles/3/26/44/73/@/3010610-maquiagem-de-sandy-e-sua-marca-registrad-950x0-2.jpg',
+                                'mensagem': 'Entrou no Grupo',
+                                'nome': p['nome'] + ''
+                              }).then((d2) {
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                  return ChatPage('');
+                                }));
+                              });
                             },
                             leading: CircleAvatar(
                                 backgroundImage: NetworkImage(p['imagem'])),
                             title: Text(p['nome']),
-                            subtitle: Text(p['cidade'])
-//                            trailing: doc['imagem'] == null
-//                                ? IconButton(
-//                                    icon: Icon(Icons.camera_enhance),
-//                                    onPressed: () {
-////                                      this.getImage(index);
-//                                    })
-//                                : null);
-                            );
+                            subtitle: Text(p['cidade']));
                       }),
                 )
               ],

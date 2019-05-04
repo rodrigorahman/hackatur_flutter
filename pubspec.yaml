@@ -26,9 +26,11 @@ dependencies:
   camera: ^0.5.0
   image_picker: ^0.6.0+2
   cloud_firestore: ^0.10.1
-
-
-
+  url_launcher: ^5.0.2
+  shared_preferences: ^0.5.2
+  dio: 2.1.2
+  async_loader: ^0.1.2
+  firebase_messaging: ^4.0.0+4
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +60,12 @@ flutter:
    - images/icone-laranja.png
    - images/bg.png
    - images/cvc-logo.png
+   - images/icon-1.png
+   - images/icon-2.png
+   - images/icon-3.png
+   - images/icon-4.png
+   - images/icon-5.png
+   - images/icon-6.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

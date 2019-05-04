@@ -1,6 +1,10 @@
-import 'package:cvcandgo/pages/ConectsePage.dart';
+import 'package:cvcandgo/pages/ChatPage.dart';
+//import 'package:cvcandgo/pages/ConectsePage.dart';
+import 'package:cvcandgo/pages/GuiaVirtualPage.dart';
+import 'package:cvcandgo/pages/Restrictions.dart';
 import 'package:cvcandgo/pages/SendDocuments.dart';
 import 'package:flutter/material.dart';
+import 'package:cvcandgo/storage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,6 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var user = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                                       color: Colors.white,
                                       fontSize: 30)),
                               Text(
-                                'Murillo Rosa',
+                                user,
                                 style: TextStyle(
                                     fontFamily: 'OpenSans-Regular',
                                     fontWeight: FontWeight.normal,
@@ -75,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: Alignment.topLeft,
                     padding: EdgeInsets.only(left: 40, top: 20, bottom: 10),
                     child: Text(
-                      'ESCOLHA UM ITEM',
+                      'PRONTO ! COMEÇE BEM SUA VIAGEM',
                       style: TextStyle(fontSize: 15, fontFamily: 'OpenSans'),
                     )),
                 GridView.count(
@@ -86,10 +92,11 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.only(left: 20, right: 20),
                   physics: ScrollPhysics(),
                   children: [
-                    this.buildMenu(
+                    this.buildMenu2(
                         context,
-                        Icon(Icons.description,
-                            size: 50, color: Theme.of(context).primaryColor),
+                        Image.asset('images/icon-3.png', width: 120,),
+//                        Icon(Icons.description,
+//                            size: 50, color: Theme.of(context).primaryColor),
                         'Enviar Documentos', (context) {
                       Navigator.push(
                           context,
@@ -97,47 +104,87 @@ class _HomePageState extends State<HomePage> {
                             builder: (BuildContext context) => SendDocuments(),
                           ));
                     }),
-                    this.buildMenu(
+                    this.buildMenu2(
                         context,
-                        Icon(Icons.supervisor_account,
-                            size: 50, color: Theme.of(context).primaryColor),
+                        Image.asset('images/icon-6.png', width: 120,),
                         'CVC Conecte-se', (context) {
+                      Storage.getUser();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => ConectsePage(),
+                            builder: (BuildContext context) => ChatPage(user),
                           ));
                     }),
-                    this.buildMenu(
+                    this.buildMenu2(
                         context,
-                        Icon(Icons.accessibility_new,
-                            size: 50, color: Theme.of(context).primaryColor),
-                        'Guia Virtual',
-                        () {}),
-                    this.buildMenu(
+                        Image.asset('images/icon-1.png', width: 120,),
+                        'Guia Virtual', (context) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                GuiaVirtualPage(),
+                          ));
+                    }),
+                    this.buildMenu2(
                         context,
-                        Icon(Icons.gavel,
-                            size: 50, color: Theme.of(context).primaryColor),
+                        Image.asset('images/icon-4.png', width: 120),
                         'Restrições',
-                        () {}),
-                    this.buildMenu(
-                        context,
-                        Icon(Icons.business_center,
-                            size: 50, color: Theme.of(context).primaryColor),
-                        'Meu Intercâmbio',
-                        () {}),
-                    this.buildMenu(
-                        context,
-                        Icon(Icons.add_shopping_cart,
-                            size: 50, color: Theme.of(context).primaryColor),
-                        'Chicletinho',
-                        () {}),
+                        (context) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    Restrictions(),
+                              ));
+                        }),
+//                    this.buildMenu(
+//                        context,
+//                        Icon(Icons.business_center,
+//                            size: 50, color: Theme.of(context).primaryColor),
+//                        'Meu Intercâmbio',
+//                        () {}),
+//                    this.buildMenu(
+//                        context,
+//                        Icon(Icons.add_shopping_cart,
+//                            size: 50, color: Theme.of(context).primaryColor),
+//                        'Chicletinho',
+//                        () {}),
                   ],
                 )
               ],
             )),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildMenu2(context, Image image, String text, onPressed) {
+    return GestureDetector(
+      onTap: () {
+        onPressed(context);
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+                color: Colors.grey[400], blurRadius: 10, offset: Offset(2, 2))
+          ], color: Colors.white, borderRadius: BorderRadius.circular(10)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              image,
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Text(text,
+                    style: TextStyle(
+                        fontSize: 15, color: Color.fromRGBO(74, 41, 151, 1))),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -169,5 +216,15 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Storage.getUser().then((nome) {
+      setState(() {
+        user = nome;
+      });
+    });
   }
 }
