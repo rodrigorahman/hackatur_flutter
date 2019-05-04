@@ -43,15 +43,15 @@ class RestTemplate {
 //        _dio.interceptors.responseLock.lock();
 //        _dio.interceptors.errorLock.lock();
 //        dio.request(options.path, options: options);
-        try {
-          Navigator.of(this.context
-          ).push(MaterialPageRoute(
-            builder: (BuildContext context) => FirstAccess(),
-          )
-          );
-        }catch(err){
-
-        }
+//        try {
+//          Navigator.of(this.context
+//          ).push(MaterialPageRoute(
+//            builder: (BuildContext context) => FirstAccess(),
+//          )
+//          );
+//        }catch(err){
+//
+//        }
       }
       // Do something with response error
       return e; //continue
@@ -103,11 +103,11 @@ class RestTemplate {
 //        _dio.interceptors.responseLock.lock();
 //        _dio.interceptors.errorLock.lock();
 //        dio.request(options.path, options: options);
-        try {
-          Navigator.of(this.context).push(MaterialPageRoute(
-            builder: (BuildContext context) => FirstAccess(),
-          ));
-        } catch (err) {}
+//        try {
+//          Navigator.of(this.context).push(MaterialPageRoute(
+//            builder: (BuildContext context) => FirstAccess(),
+//          ));
+//        } catch (err) {}
         // Do something with response error
         return e; //continue
       }
