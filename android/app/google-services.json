@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "711139336702",
+    "firebase_url": "https://cvcandgo-7a2fc.firebaseio.com",
+    "project_id": "cvcandgo-7a2fc",
+    "storage_bucket": "cvcandgo-7a2fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711139336702:android:01e7f4536442fcba",
+        "android_client_info": {
+          "package_name": "com.example.cvcandgo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711139336702-nc6md3joing2asopfq6ip5qic0480vvm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30OUjLlrPygztYxIKCbv3Haj-CVxHDh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711139336702-nc6md3joing2asopfq6ip5qic0480vvm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
